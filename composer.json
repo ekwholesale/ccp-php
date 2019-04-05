@@ -15,7 +15,7 @@
     ],
     "autoload": {
       "psr-4": {
-        "ccp-php\\":"src/"
+        "CloudConfig":"src/"
       }
   }
 }
