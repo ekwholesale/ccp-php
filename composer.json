@@ -1,0 +1,12 @@
+{
+    "name": "riezahughes/ccp-php",
+    "description": "A wrapper for the XML API of cloud commerce pro. For use in PHP.",
+    "type": "wrapper",
+    "authors": [
+        {
+            "name": "Dan",
+            "email": "dan@ekwholesale.co.uk"
+        }
+    ],
+    "require": {}
+}
