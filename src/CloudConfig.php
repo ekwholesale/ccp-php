@@ -1,6 +1,6 @@
 <?php
 
-namespace ccp-php;
+namespace Cloud;
 
 var $hash;
 var $brand;
