@@ -8,7 +8,7 @@ var $namespace;
 
 
 class CloudConfig{
-  public static function setDetails($hashKey, $brandKey, $staging=true){
+  public function setDetails($hashKey, $brandKey, $staging=true){
     $this->hash = $hashKey;
     $this->brand = $brandKey;
     $this->namespace = "https://devwcfccpservicesbase.cloudcommercepro.com/"

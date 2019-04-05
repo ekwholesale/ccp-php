@@ -13,4 +13,11 @@
             "email": "dan@ekwholesale.co.uk"
         }
     ]
+    {
+    "autoload": {
+      "psr-4": {
+        "ccp-php\\":"src/"
+      }
+    }
+  }
 }
