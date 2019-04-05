@@ -1,19 +1,19 @@
 <?php
 
-namespace Cloud;
-
-var $hash;
-var $brand;
-var $namespace;
-
+namespace CloudWrapperPhp;
 
 class CloudConfig{
-  public function setDetails($hashKey, $brandKey, $staging=true){
+
+  var $hash;
+  var $brand;
+  var $namespace;
+
+  public function setDetails($hashKey = "No security hash.", $brandKey = "No brand number", $staging=true){
     $this->hash = $hashKey;
     $this->brand = $brandKey;
-    $this->namespace = "https://devwcfccpservicesbase.cloudcommercepro.com/"
+    $this->namespace = "https://devwcfccpservicesbase.cloudcommercepro.com/";
     if($staging === false){
-      $this->$namespace = "https://wcfccpservicesbase.cloudcommercepro.com/"
+      $this->$namespace = "https://wcfccpservicesbase.cloudcommercepro.com/";
     }
     return true;
   }
