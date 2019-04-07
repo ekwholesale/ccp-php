@@ -5,7 +5,8 @@
     "type": "wrapper",
     "require": {
         "php": ">=5.6",
-        "ext-curl": "*"
+        "ext-curl": "*",
+        "wsdl2phpgenerator/wsdl2phpgenerator": "^3.4"
     },
     "authors": [
         {
