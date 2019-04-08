@@ -43,7 +43,7 @@ class CloudWrapper{
 
     $response = $serviceConnect->$func($getRequest);
     //$response = $service->getProductByManufacturerSKU($getRequest);
-    //print_r($response);
+    print_r($response);
     //set result string
     $resultString = $func . "Result";
     //echo "getProductByManufacturerSKUResult()" . PHP_EOL;
@@ -51,8 +51,8 @@ class CloudWrapper{
     $product = $response->$resultString();
     //$product = $response->getProductByManufacturerSKUResult();
 
-    if($product->getContent()->getID() === 0){
-      return "Error: Sku not found.";
+    if($product->getSuccess() != 1){
+      return "Error: " . $args . " not found" . PHP_EOL;
     }
 
     return array(
@@ -74,14 +74,31 @@ class CloudWrapper{
     if($staging === false){
       $this->$namespace = "https://wcfccpservicesbase.cloudcommercepro.com/";
     }
-
-
-
     return true;
   }
+
   public function getProductByManufacturerSKU($sku){
     $productCallUrl = "CCPAPIProductsService";
     $productFunction = "getProductByManufacturerSKU";
     return $this->externalCall($productCallUrl, $productFunction, $sku);
   }
+
+  public function getProductByID($productID){
+    $productCallUrl = "CCPAPIProductsService";
+    $productFunction = "getProductByID";
+    return $this->externalCall($productCallUrl, $productFunction, $productID);
+  }
+
+  public function getProductByBarcode($productBarcode){
+    $productCallUrl = "CCPAPIProductsService";
+    $productFunction = "getProductByBarcode";
+    return $this->externalCall($productCallUrl, $productFunction, $productBarcode);
+  }
+
+  public function getProductByExternalProductID($externalID){
+    $productCallUrl = "CCPAPIProductsService";
+    $productFunction = "getProductByExternalProductId";
+    return $this->externalCall($productCallUrl, $productFunction, $externalID);
+  }
+
 }

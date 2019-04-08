@@ -19,7 +19,7 @@ class getProductByIDResponse
     /**
      * @return ResponseObjectOfAPIProduct
      */
-    public function getGetProductByIDResult()
+    public function getProductByIDResult()
     {
       return $this->getProductByIDResult;
     }

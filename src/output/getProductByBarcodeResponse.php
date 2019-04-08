@@ -19,7 +19,7 @@ class getProductByBarcodeResponse
     /**
      * @return ResponseObjectOfAPIProduct
      */
-    public function getGetProductByBarcodeResult()
+    public function getProductByBarcodeResult()
     {
       return $this->getProductByBarcodeResult;
     }

@@ -19,7 +19,7 @@ class getProductByExternalProductIdResponse
     /**
      * @return ResponseObjectOfAPIProduct
      */
-    public function getGetProductByExternalProductIdResult()
+    public function getProductByExternalProductIdResult()
     {
       return $this->getProductByExternalProductIdResult;
     }
