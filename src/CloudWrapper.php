@@ -43,7 +43,7 @@ class CloudWrapper{
 
     $response = $serviceConnect->$func($getRequest);
     //$response = $service->getProductByManufacturerSKU($getRequest);
-    print_r($response);
+    //print_r($response);
     //set result string
     $resultString = $func . "Result";
     //echo "getProductByManufacturerSKUResult()" . PHP_EOL;
