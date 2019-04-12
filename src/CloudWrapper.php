@@ -1,7 +1,7 @@
 <?php
 
 namespace CloudWrapperPhp;
-require __DIR__ . '\output\autoload.php';
+require 'output/autoload.php';
 
 class CloudWrapper{
 
@@ -51,14 +51,14 @@ class CloudWrapper{
     $product = $response->$resultString();
     //$product = $response->getProductByManufacturerSKUResult();
 
-    if($product->getSuccess() != 1){
+    if($product->getContent()->getID() == 0){
       return "Error: " . $args . " not found" . PHP_EOL;
     }
 
     return array(
       "ccp_id" => $product->getContent()->getID(),
-      "name" => $product->getcontent()->getName(),
-      "stockLocations" => $product->getcontent()->getStockLocations(),
+      "name" => $product->getContent()->getName(),
+      "stockLocations" => $product->getContent()->getStockLocations(),
       "sku" => $product->getContent()->getManufacturerSKU(),
       "barcode" => $product->getContent()->getBarCodeNumber(),
       "additionalBarcode" => $product->getContent()->getAdditionalBarCodes(),
