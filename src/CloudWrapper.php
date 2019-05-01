@@ -23,7 +23,7 @@ class CloudWrapper{
   }
 
   private function externalCall($service, $func, $args){
-
+    $loc = "";
     //set up function choice
     $serviceChoice = "\\" . $service;
 
@@ -53,12 +53,17 @@ class CloudWrapper{
 
     if($product->getContent()->getID() == 0){
       return "Error: " . $args . " not found" . PHP_EOL;
+      //print_r($product->getContent()->getStockLocations()->getItemBayStockLevel());
+    }
+
+    foreach($product->getContent()->getStockLocations() as $bay){
+      $loc .= $bay->getWarehouseBayName();
     }
 
     return array(
       "ccp_id" => $product->getContent()->getID(),
       "name" => $product->getContent()->getName(),
-      "stockLocations" => $product->getContent()->getStockLocations(),
+      "stockLocations" => $loc,
       "sku" => $product->getContent()->getManufacturerSKU(),
       "barcode" => $product->getContent()->getBarCodeNumber(),
       "additionalBarcode" => $product->getContent()->getAdditionalBarCodes(),
@@ -94,11 +99,11 @@ class CloudWrapper{
     $productFunction = "getProductByBarcode";
     return $this->externalCall($productCallUrl, $productFunction, $productBarcode);
   }
-
+/* External Product ID not working at this time
   public function getProductByExternalProductID($externalID){
     $productCallUrl = "CCPAPIProductsService";
     $productFunction = "getProductByExternalProductId";
     return $this->externalCall($productCallUrl, $productFunction, $externalID);
   }
-
+*/
 }
