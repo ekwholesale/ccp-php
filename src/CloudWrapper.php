@@ -112,6 +112,7 @@ class CloudWrapper{
       if($product->getContent()->getStockLocations()->getItemBayStockLevel() >= 1){
           foreach($product->getContent()->getStockLocations() as $bay){
             $loc .= $bay->getWarehouseBayName();
+            $lock .= " ";
           }
       }
 
