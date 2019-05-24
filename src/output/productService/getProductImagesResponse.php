@@ -19,7 +19,7 @@ class getProductImagesResponse
     /**
      * @return ResponseObjectOfListOfAPIProductImage
      */
-    public function getGetProductImagesResult()
+    public function getProductImagesResult()
     {
       return $this->getProductImagesResult;
     }
@@ -28,7 +28,7 @@ class getProductImagesResponse
      * @param ResponseObjectOfListOfAPIProductImage $getProductImagesResult
      * @return getProductImagesResponse
      */
-    public function setGetProductImagesResult($getProductImagesResult)
+    public function setProductImagesResult($getProductImagesResult)
     {
       $this->getProductImagesResult = $getProductImagesResult;
       return $this;

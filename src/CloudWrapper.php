@@ -102,10 +102,32 @@ class CloudWrapper{
       //echo "getProductByManufacturerSKUResult()" . PHP_EOL;
       //echo $resultString . "()" . PHP_EOL;
       $product = $response->$resultString();
+      //print_r($product);
+
       if(!$product->getSuccess()){
         return "Error: Serious CCP Issue." . PHP_EOL;
       }
       //$product = $response->getProductByManufacturerSKUResult();
+      
+      //check for if it's an image call
+      if($func === "getProductImages"){
+
+        if(count($product->getContent()->getAPIProductImage()) > 0){
+          $imageArray = [];
+          $images = $product->getContent()->getAPIProductImage();
+          foreach($images as $productImage){
+            array_push($imageArray, array(
+              "image_id" => $productImage->getID(),
+              "url" => $productImage->getURL()
+            ));
+          }
+          return $imageArray;
+
+        }else{
+          return "Wrong ID";
+        }
+      }
+
 
       if($product->getContent()->getID() == 0){
         return "Error: " . $args . " not found" . PHP_EOL;
@@ -123,6 +145,7 @@ class CloudWrapper{
         "ccp_id" => $product->getContent()->getID(),
         "name" => $product->getContent()->getName(),
         "stockLocations" => $loc,
+        
         "sku" => $product->getContent()->getManufacturerSKU(),
         "barcode" => $product->getContent()->getBarCodeNumber(),
         "additionalBarcode" => $product->getContent()->getAdditionalBarCodes(),
@@ -169,6 +192,11 @@ public function getOrderDetailsByReference($orderDetails){
   $productCallUrl = "CCPApiOrderService";
   $productFunction = "getOrderDetailsByReference";
   return $this->externalCall($productCallUrl, $productFunction, $orderDetails);
+}
+public function getProductImages($orderDetails){
+  $productCallUrl = "CCPAPIProductsService";
+  $productFunction = "getProductImages";
+  return $this->externalCall($productCallUrl, $productFunction, $orderDetails); 
 }
 
 }
