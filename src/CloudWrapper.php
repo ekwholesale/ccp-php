@@ -145,11 +145,11 @@ class CloudWrapper{
         "ccp_id" => $product->getContent()->getID(),
         "name" => $product->getContent()->getName(),
         "stockLocations" => $loc,
-        
         "sku" => $product->getContent()->getManufacturerSKU(),
         "barcode" => $product->getContent()->getBarCodeNumber(),
         "additionalBarcode" => $product->getContent()->getAdditionalBarCodes(),
-        "stock" => $product->getContent()->getStockLevel()
+        "stock" => $product->getContent()->getStockLevel(),
+        "weight_g" => $product->getContent()->getWeightGM()
       );
     }
   }
