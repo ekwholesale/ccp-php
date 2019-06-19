@@ -3,6 +3,7 @@
 namespace CloudWrapperPhp;
 require 'output/productService/autoload.php';
 require 'output/orderService/autoload.php';
+require 'output/customerService/autoload.php';
 
 class CloudWrapper{
 
@@ -12,15 +13,15 @@ class CloudWrapper{
 
   public function __construct(){
 
-/*
-    $generator = new \Wsdl2PhpGenerator\Generator();
-    $generator->generate(
-    	new \Wsdl2PhpGenerator\Config(array(
-            'inputFile' => 'http://wcfccpservicesbase.cloudcommercepro.com/CCPApiOrderService.svc?singlewsdl',
-            'outputDir' =>  __DIR__ . '/output'
-        ))
-    );
-*/
+
+    // $generator = new \Wsdl2PhpGenerator\Generator();
+    // $generator->generate(
+    // 	new \Wsdl2PhpGenerator\Config(array(
+    //         'inputFile' => 'http://wcfccpservicesbase.cloudcommercepro.com/CCPApiCustomerService.svc?singlewsdl',
+    //         'outputDir' =>  __DIR__ . '/output/customerService'
+    //     ))
+    // );
+
   }
 
   private function externalCall($service, $func, $args){
@@ -37,13 +38,13 @@ class CloudWrapper{
         "SecurityHash" => $this->hash,
         "Content" => array("ExternalOrderRef", $args)
       );
-    }else{
-      $requestItems = array(
-        "BrandID" => $this->brand,
-        "SecurityHash" => $this->hash,
-        "Content" => $args
-      );
-    }
+      }else{
+        $requestItems = array(
+          "BrandID" => $this->brand,
+          "SecurityHash" => $this->hash,
+          "Content" => $args
+        );
+      }
 
       //set get request
       $requestChoice = "\\" . $func;
@@ -152,6 +153,54 @@ class CloudWrapper{
         "weight_g" => $product->getContent()->getWeightGM()
       );
     }
+
+    if($service === "CCPApiCustomerService"){
+      $loc = "";
+      //set up function choice
+      $serviceChoice = "\\" . $service;
+
+      $serviceConnect = new $serviceChoice;
+      //$service = new \CCPAPIProductsService();
+      $requestItems = array(
+        "BrandID" => $this->brand,
+        "SecurityHash" => $this->hash,
+        "Content" => array(
+          'intBrandID' => '538',
+          'SalesChannelID' => '6102',
+          'CompanyName' => $args['firstname'] . " " . $args['lastname'],
+          'TradingName' => $args['company'],
+          'FirstName' => $args['firstname'],
+          'LastName' => $args['lastname'],
+          'EmailAddress' => $args['email'],
+          'intCustomerType' => 8,
+          'intPaymentTerms' => 1,
+          'Address1' => $args['address1'],
+          'Address2' => $args['address2'],
+          'Postcode' => $args['postcode'],
+          'TownCity' => $args['city'],
+          'CountyRegion' => $args['county'],
+          'Country' => $args['country'],
+          'TelNo' => $args['telephone']
+        )
+      );
+
+      //set get request
+      $requestChoice = "\\" . $func;
+
+      $setRequest = new $requestChoice($requestItems);
+
+      $response = $serviceConnect->$func($setRequest);
+
+      $resultString = "get" . $func . "Result";
+
+      $customer = $response->$resultString();
+
+      //print_r($customer);
+
+      return "Customer details sent to CCP";
+    }
+
+    return "Options not valid. Try again";
   }
 
   public function config($hashKey = "No security hash.", $brandKey = "No brand number", $staging=true){
@@ -159,7 +208,7 @@ class CloudWrapper{
     $this->brand = $brandKey;
     $this->namespace = "http://devwcfccpservicesbase.cloudcommercepro.com/";
     if($staging === false){
-      $this->$namespace = "https://wcfccpservicesbase.cloudcommercepro.com/";
+      $this->namespace = "https://wcfccpservicesbase.cloudcommercepro.com/";
     }
     return true;
   }
@@ -198,5 +247,9 @@ public function getProductImages($orderDetails){
   $productFunction = "getProductImages";
   return $this->externalCall($productCallUrl, $productFunction, $orderDetails); 
 }
-
+public function AddCustomer($customerDetails){
+  $productCallUrl = "CCPApiCustomerService";
+  $productFunction = "AddCustomer";
+  return $this->externalCall($productCallUrl, $productFunction, $customerDetails); 
+}
 }
