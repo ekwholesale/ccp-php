@@ -197,7 +197,10 @@ class CloudWrapper{
 
       //print_r($customer);
 
-      return "Customer details sent to CCP";
+      return array(
+        "success" => true,
+        "ccpid" => $customer->getContent()->getID()
+      );
     }
 
     return "Options not valid. Try again";
