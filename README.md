@@ -25,4 +25,8 @@ ORDER WSDL -
 
 - getOrderDetailsByReference
 
+CUSTOMER WSDL - 
+
+- AddCustomer
+
 I will work through the rest when i have time.
