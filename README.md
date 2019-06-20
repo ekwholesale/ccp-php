@@ -19,6 +19,8 @@ PRODUCT WSDL -
 
 - ~~getProductByExternalProductID~~ currently not working. 
 
+- getProductImages
+
 ORDER WSDL - 
 
 - getOrderDetailsByReference
