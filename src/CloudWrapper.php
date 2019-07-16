@@ -167,8 +167,8 @@ class CloudWrapper{
         "Content" => array(
           'intBrandID' => '538',
           'SalesChannelID' => '6102',
-          'CompanyName' => $args['firstname'] . " " . $args['lastname'],
-          'TradingName' => $args['company'],
+          'CompanyName' => $args['company'],
+          'TradingName' => $args['firstname'] . " " . $args['lastname'],
           'FirstName' => $args['firstname'],
           'LastName' => $args['lastname'],
           'EmailAddress' => $args['email'],
