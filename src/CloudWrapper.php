@@ -33,11 +33,11 @@ class CloudWrapper{
       $serviceConnect = new $serviceChoice;
       //$service = new \CCPAPIProductsService();
       if($func === "getOrderDetailsByReference"){
-      $requestItems = array(
-        "BrandID" => $this->brand,
-        "SecurityHash" => $this->hash,
-        "Content" => array("ExternalOrderRef", $args)
-      );
+        $requestItems = array(
+          "BrandID" => $this->brand,
+          "SecurityHash" => $this->hash,
+          "Content" => array("ExternalOrderRef", $args)
+        );
       }else{
         $requestItems = array(
           "BrandID" => $this->brand,
@@ -83,11 +83,44 @@ class CloudWrapper{
 
       $serviceConnect = new $serviceChoice;
       //$service = new \CCPAPIProductsService();
-      $requestItems = array(
-        "BrandID" => $this->brand,
-        "SecurityHash" => $this->hash,
-        "Content" => $args
-      );
+
+
+      if($func === "GetWarehouseBays"){
+        $requestItems = array(
+          "BrandID" => $this->brand,
+          "SecurityHash" => $this->hash,
+          "Content" => 6211
+        );
+
+        //set get request
+        $requestChoice = "\\" . $func;
+
+        $getRequest = new $requestChoice($requestItems);
+        //$getRequest = new \getProductByManufacturerSKU($requestItems);
+
+        $response = $serviceConnect->$func($getRequest);
+        //$response = $service->getProductByManufacturerSKU($getRequest);
+        //print_r($response);
+        //set result string
+        $resultString = $func . "Result";
+        //echo "getProductByManufacturerSKUResult()" . PHP_EOL;
+        //echo $resultString . "()" . PHP_EOL;
+        $product = $response->$resultString();
+        print_r($product);
+
+        if(!$product->getSuccess()){
+          return "Error: Serious CCP Issue." . PHP_EOL;
+        }
+        return($product);
+
+      }else{
+        $requestItems = array(
+          "BrandID" => $this->brand,
+          "SecurityHash" => $this->hash,
+          "Content" => $args
+        );
+      }
+      
 
       //set get request
       $requestChoice = "\\" . $func;
@@ -150,7 +183,8 @@ class CloudWrapper{
         "barcode" => $product->getContent()->getBarCodeNumber(),
         "additionalBarcode" => $product->getContent()->getAdditionalBarCodes(),
         "stock" => $product->getContent()->getStockLevel(),
-        "weight_g" => $product->getContent()->getWeightGM()
+        "weight_g" => $product->getContent()->getWeightGM(),
+        "taxable" => $product->getContent()->getVATRateID()
       );
     }
 
@@ -166,7 +200,7 @@ class CloudWrapper{
         "SecurityHash" => $this->hash,
         "Content" => array(
           'intBrandID' => '538',
-          'SalesChannelID' => '6102',
+          'SalesChannelID' => '5498',
           'CompanyName' => $args['company'],
           'TradingName' => $args['firstname'] . " " . $args['lastname'],
           'FirstName' => $args['firstname'],
@@ -250,9 +284,15 @@ public function getProductImages($orderDetails){
   $productFunction = "getProductImages";
   return $this->externalCall($productCallUrl, $productFunction, $orderDetails); 
 }
+public function getBayLocations(){
+  $productCallUrl = "CCPAPIProductsService";
+  $productFunction = "GetWarehouseBays";
+  return $this->externalCall($productCallUrl, $productFunction, false); 
+}
 public function AddCustomer($customerDetails){
   $productCallUrl = "CCPApiCustomerService";
   $productFunction = "AddCustomer";
   return $this->externalCall($productCallUrl, $productFunction, $customerDetails); 
 }
+
 }

@@ -19,7 +19,7 @@ class GetWarehouseBaysResponse
     /**
      * @return ResponseObjectOfListOfAPIWarehouseBay
      */
-    public function getGetWarehouseBaysResult()
+    public function GetWarehouseBaysResult()
     {
       return $this->GetWarehouseBaysResult;
     }
