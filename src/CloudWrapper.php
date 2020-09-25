@@ -17,8 +17,8 @@ class CloudWrapper{
     // $generator = new \Wsdl2PhpGenerator\Generator();
     // $generator->generate(
     // 	new \Wsdl2PhpGenerator\Config(array(
-    //         'inputFile' => 'http://wcfccpservicesbase.cloudcommercepro.com/CCPApiCustomerService.svc?singlewsdl',
-    //         'outputDir' =>  __DIR__ . '/output/customerService'
+    //         'inputFile' => 'https://wcfccpservicesbase.cloudcommercepro.com/CCPApiOrderService.svc?wsdl',
+    //         'outputDir' =>  __DIR__ . '/output/orderServiceNew'
     //     ))
     // );
 
@@ -69,9 +69,13 @@ class CloudWrapper{
         //print_r($product->getContent()->getStockLocations()->getItemBayStockLevel());
       }
       */
-
+      if($order->getContent() !== null){
+        $ccpReturn = $order->getContent()->getOrder()->getID();
+      }else{
+        $ccpReturn = "0";
+      }
       return array(
-        "ccp_id" => $order->getContent()->getOrder()->getID(),
+        "ccp_id" => $ccpReturn,
       );
     }
 
