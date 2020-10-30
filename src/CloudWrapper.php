@@ -204,7 +204,7 @@ class CloudWrapper{
         "SecurityHash" => $this->hash,
         "Content" => array(
           'intBrandID' => '538',
-          'SalesChannelID' => '5498',
+          'SalesChannelID' => '6102',
           'CompanyName' => $args['company'],
           'TradingName' => $args['firstname'] . " " . $args['lastname'],
           'FirstName' => $args['firstname'],
